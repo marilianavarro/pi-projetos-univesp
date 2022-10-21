@@ -45,6 +45,15 @@ FOREIGN KEY(estagio_id) REFERENCES kanban_estagio(id),
 FOREIGN KEY(projeto_id) REFERENCES projeto(id),
 FOREIGN KEY(usuario_id) REFERENCES system_users(id)) ; 
 
+CREATE TABLE notificacao( 
+      id  INTEGER    NOT NULL  , 
+      telegram_chatid int   , 
+      telegram_usuario varchar  (100)   , 
+      datahora_criacao datetime   , 
+      datahora_excluido datetime   , 
+      datahora_atualizacao datetime   , 
+ PRIMARY KEY (id)) ; 
+
 CREATE TABLE projeto( 
       id  INTEGER    NOT NULL  , 
       titulo varchar  (200)   , 

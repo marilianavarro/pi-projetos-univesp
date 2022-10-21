@@ -4,22 +4,32 @@
     <icon> fa-fw </icon>
     <menu>
       <menuitem label="Projetos">
-        <icon>far:circle fa-fw </icon>
+        <icon>fas:tasks fa-fw </icon>
         <action>ProjetoList#method=onShow</action>
       </menuitem>
       <menuitem label="Status">
-        <icon>far:circle fa-fw </icon>
+        <icon>fas:signal fa-fw </icon>
         <action>StatusHeaderList#method=onShow</action>
       </menuitem>
-      <menuitem label="Eventos">
-        <icon>far:circle fa-fw </icon>
-        <action>LogEventosHeaderList#method=onShow</action>
-      </menuitem>
       <menuitem label="Calendário">
-        <icon>far:circle fa-fw </icon>
+        <icon>fas:calendar-alt fa-fw </icon>
         <action>KanbanItemCalendarFormView</action>
       </menuitem>
+      <menuitem label="Testes">
+        <icon>fas:cogs fa-fw </icon>
+        <action>TesteForm#method=onShow</action>
+      </menuitem>
+      <menuitem label="Notificações">
+        <icon>fas:bell fa-fw </icon>
+        <action>NotificacaoList#method=onShow</action>
+      </menuitem>
     </menu>
+  </menuitem>
+  <menuitem label="Dashboard">
+    <icon>fas:chart-line fa-fw </icon>
+    <action>DashboardView#method=onShow</action>
+    <menu>  
+</menu>
   </menuitem>
   <menuitem label="_t{Administration}">
     <icon>fas:home fa-fw</icon>

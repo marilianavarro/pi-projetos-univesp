@@ -35,6 +35,15 @@ CREATE TABLE log_eventos(
       datahora_atualizacao timestamp(0)   , 
  PRIMARY KEY (id)) ; 
 
+CREATE TABLE notificacao( 
+      id number(10)    NOT NULL , 
+      telegram_chatid number(10)   , 
+      telegram_usuario varchar  (100)   , 
+      datahora_criacao timestamp(0)   , 
+      datahora_excluido timestamp(0)   , 
+      datahora_atualizacao timestamp(0)   , 
+ PRIMARY KEY (id)) ; 
+
 CREATE TABLE projeto( 
       id number(10)    NOT NULL , 
       titulo varchar  (200)   , 
@@ -174,6 +183,21 @@ WHEN
 BEGIN 
 
 SELECT log_eventos_id_seq.NEXTVAL INTO :NEW.id FROM DUAL; 
+
+END;
+CREATE SEQUENCE notificacao_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE OR REPLACE TRIGGER notificacao_id_seq_tr 
+
+BEFORE INSERT ON notificacao FOR EACH ROW 
+
+WHEN 
+
+(NEW.id IS NULL) 
+
+BEGIN 
+
+SELECT notificacao_id_seq.NEXTVAL INTO :NEW.id FROM DUAL; 
 
 END;
 CREATE SEQUENCE projeto_id_seq START WITH 1 INCREMENT BY 1; 

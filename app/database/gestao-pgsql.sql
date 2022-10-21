@@ -35,6 +35,15 @@ CREATE TABLE log_eventos(
       datahora_atualizacao timestamp   , 
  PRIMARY KEY (id)) ; 
 
+CREATE TABLE notificacao( 
+      id  SERIAL    NOT NULL  , 
+      telegram_chatid integer   , 
+      telegram_usuario varchar  (100)   , 
+      datahora_criacao timestamp   , 
+      datahora_excluido timestamp   , 
+      datahora_atualizacao timestamp   , 
+ PRIMARY KEY (id)) ; 
+
 CREATE TABLE projeto( 
       id  SERIAL    NOT NULL  , 
       titulo varchar  (200)   , 

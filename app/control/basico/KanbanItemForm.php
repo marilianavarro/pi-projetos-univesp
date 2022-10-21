@@ -47,6 +47,9 @@ class KanbanItemForm extends TPage
         $titulo->setMaxLength(200);
         $status_id->setDefaultOption(false);
 
+        $status_id->setValue(Status::EmAndamento);
+        $usuario_id->setValue(TSession::getValue("userid"));
+
         $status_id->enableSearch();
         $usuario_id->enableSearch();
 
@@ -111,10 +114,18 @@ class KanbanItemForm extends TPage
             $messageAction = null;
 
             $this->form->validate(); // validate form data
+            $data = $this->form->getData(); // get form data as array
+
+            $datahora_inicio = strtotime($data->datahora_inicio);
+            $datahora_fim = strtotime($data->datahora_fim);
+
+            if ($datahora_inicio > $datahora_fim)
+            {
+                throw new Exception('A Data Término deve ser maior que a data início');
+            }
 
             $object = new KanbanItem(); // create an empty object 
 
-            $data = $this->form->getData(); // get form data as array
             $object->fromArray( (array) $data); // load the object with data
 
             $object->store(); // save the object 
@@ -144,9 +155,9 @@ class KanbanItemForm extends TPage
         {
             //</catchAutoCode> 
 
+            TTransaction::rollback(); // undo all pending operations
             new TMessage('error', $e->getMessage()); // shows the exception error message
             $this->form->setData( $this->form->getData() ); // keep form data
-            TTransaction::rollback(); // undo all pending operations
         }
     }
 

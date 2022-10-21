@@ -15,8 +15,6 @@ class KanbanItem extends TRecord
     private $status;
     private $estagio;
 
-    
-
     /**
      * Constructor method
      */
@@ -35,7 +33,7 @@ class KanbanItem extends TRecord
         parent::addAttribute('datahora_criacao');
         parent::addAttribute('datahora_excluido');
         parent::addAttribute('datahora_atualizacao');
-            
+    
     }
 
     /**
@@ -143,6 +141,20 @@ class KanbanItem extends TRecord
         return $this->estagio;
     }
 
+    public function get_datahora_inicio_br()
+    {
+        return date("d/m/Y H:i:s", strtotime($this->datahora_fim));
+    }
+
+    public function get_datahora_fim_br()
+    {
+        return date("d/m/Y H:i:s", strtotime($this->datahora_fim));
+    }
+
+    public function get_tempo_percorrido()
+    {
+        return Funcao::get_date_diff($this->datahora_fim, strtotime('now'));
+    }
     
 }
 

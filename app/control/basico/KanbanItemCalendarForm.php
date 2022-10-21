@@ -47,6 +47,8 @@ class KanbanItemCalendarForm extends TPage
         $status_id->addValidation("Status Obrigatório", new TRequiredValidator()); 
 
         $titulo->setMaxLength(200);
+        $status_id->setValue(Status::EmAndamento);
+        $usuario_id->setValue(TSession::getValue("userid"));
 
         $datahora_fim->setMask('dd/mm/yyyy hh:ii');
         $datahora_inicio->setMask('dd/mm/yyyy hh:ii');
@@ -122,10 +124,18 @@ class KanbanItemCalendarForm extends TPage
             $messageAction = null;
 
             $this->form->validate(); // validate form data
+            $data = $this->form->getData(); // get form data as array
+
+            $datahora_inicio = strtotime($data->datahora_inicio);
+            $datahora_fim = strtotime($data->datahora_fim);
+
+            if ($datahora_inicio > $datahora_fim)
+            {
+                throw new Exception('A Data Término deve ser maior que a data início');
+            }
 
             $object = new KanbanItem(); // create an empty object 
 
-            $data = $this->form->getData(); // get form data as array
             $object->fromArray( (array) $data); // load the object with data
 
             $object->store(); // save the object 
@@ -149,9 +159,9 @@ class KanbanItemCalendarForm extends TPage
         {
             //</catchAutoCode> 
 
+            TTransaction::rollback(); // undo all pending operations
             new TMessage('error', $e->getMessage()); // shows the exception error message
             $this->form->setData( $this->form->getData() ); // keep form data
-            TTransaction::rollback(); // undo all pending operations
         }
     }
     public function onDelete($param = null) 
@@ -285,6 +295,10 @@ class KanbanItemCalendarForm extends TPage
 
                 $object->datahora_inicio = str_replace('T', ' ', $param['start_time']);
                 $object->datahora_fim   = str_replace('T', ' ', $param['end_time']);
+
+                // Notifica os usuários da alteração de data do projeto.
+                $msg = "🔄️*Data da tarefa do projeto foi alterada.*\n*Estágio:* {titulo}\n*Projeto:* {projeto->titulo}\n*Início:* {datahora_inicio_br}\n*Término:* {datahora_fim_br} _({tempo_percorrido})_";
+                NotificacaoService::notificar($msg, $object);
 
                 $object->store();
 

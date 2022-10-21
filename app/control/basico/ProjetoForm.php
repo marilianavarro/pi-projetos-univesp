@@ -83,21 +83,27 @@ class ProjetoForm extends TPage
             $object->fromArray( (array) $data); // load the object with data
 
             $object->store(); // save the object 
-            if(!$data->id) {
+            if(!$data->id)
+            {
                 // Registro novo
 
                 // Cria os estágios padrões no Kanban.
                 $estagios = array("Não Iniciado", "Em Andamento", "Concluído");
 
                 $ordem = 1;
-                foreach($estagios as $titulo) {
-                    $estagio = New KanbanEstagio();
+                foreach($estagios as $titulo)
+                {
+                    $estagio = new KanbanEstagio();
                     $estagio->projeto_id = $object->id;
                     $estagio->titulo = $titulo;
                     $estagio->estagio_ordem = $ordem;
                     $estagio->store();
                     $ordem++;
                 }
+
+                // Notifica os usuários da criação do projeto.
+                $msg = "✅ *Novo projeto criado!*\n*Projeto:* {titulo}";
+                NotificacaoService::notificar($msg, $object);
             }
 
             $messageAction = new TAction(['KanbanView', 'onShow']);   
@@ -118,6 +124,7 @@ class ProjetoForm extends TPage
             new TMessage('info', "Projeto salvo", $messageAction); 
 
                         TScript::create("Template.closeRightPanel();"); 
+
         }
         catch (Exception $e) // in case of exception
         {

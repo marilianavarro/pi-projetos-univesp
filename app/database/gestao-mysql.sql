@@ -35,6 +35,15 @@ CREATE TABLE log_eventos(
       `datahora_atualizacao` datetime   , 
  PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; 
 
+CREATE TABLE notificacao( 
+      `id`  INT  AUTO_INCREMENT    NOT NULL  , 
+      `telegram_chatid` int   , 
+      `telegram_usuario` varchar  (100)   , 
+      `datahora_criacao` datetime   , 
+      `datahora_excluido` datetime   , 
+      `datahora_atualizacao` datetime   , 
+ PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; 
+
 CREATE TABLE projeto( 
       `id`  INT  AUTO_INCREMENT    NOT NULL  , 
       `titulo` varchar  (200)   , 

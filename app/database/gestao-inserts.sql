@@ -1,3 +1,13 @@
+INSERT INTO kanban_estagio (id,projeto_id,titulo,estagio_ordem,datahora_criacao,datahora_excluido,datahora_atualizacao) VALUES (1,1,'Não Iniciado',1,'2022-10-21',null,null); 
+
+INSERT INTO kanban_estagio (id,projeto_id,titulo,estagio_ordem,datahora_criacao,datahora_excluido,datahora_atualizacao) VALUES (2,1,'Em Andamento',2,'2022-10-21',null,null); 
+
+INSERT INTO kanban_estagio (id,projeto_id,titulo,estagio_ordem,datahora_criacao,datahora_excluido,datahora_atualizacao) VALUES (3,1,'Concluído',3,'2022-10-21',null,null); 
+
+INSERT INTO notificacao (id,telegram_chatid,telegram_usuario,datahora_criacao,datahora_excluido,datahora_atualizacao) VALUES (1,1005805795,'brunoconstantino','2022-10-21',null,null); 
+
+INSERT INTO projeto (id,titulo,datahora_criacao,datahora_excluido,datahora_atualizacao) VALUES (1,'Projeto de Teste','2022-10-21',null,null); 
+
 INSERT INTO status (id,titulo,cor,datahora_criacao,datahora_excluido,datahora_atualizacao) VALUES (1,'Não Iniciado','#33DDFF',null,null,null); 
 
 INSERT INTO status (id,titulo,cor,datahora_criacao,datahora_excluido,datahora_atualizacao) VALUES (2,'Em Andamento','#F3EF5D',null,null,null); 
