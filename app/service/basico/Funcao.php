@@ -111,6 +111,8 @@ class Funcao
     
     public static function telegram($message, $token, $chatid)
     {
+        set_time_limit(30);
+        
         $ch = curl_init("https://api.telegram.org/bot$token/sendMessage");
         $data = http_build_query([
             "chat_id" => $chatid,
@@ -122,8 +124,12 @@ class Funcao
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         $result = curl_exec($ch);
         curl_close($ch);
+        
+        set_time_limit(0);
         
         return $result;
     }
