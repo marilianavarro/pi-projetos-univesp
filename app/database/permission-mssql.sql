@@ -133,7 +133,7 @@ CREATE TABLE system_user_program (
     FOREIGN KEY(system_program_id) REFERENCES system_program(id));
 INSERT INTO system_user_program VALUES(1,2,7);
 CREATE TABLE system_preference (
-    id nvarchar(max),
+    id varchar(255),
     preference nvarchar(max)
 );
 CREATE TABLE system_user_unit (

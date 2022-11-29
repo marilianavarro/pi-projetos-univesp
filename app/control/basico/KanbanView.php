@@ -243,6 +243,10 @@ class KanbanView extends TPage
                         TScript::create("$(\"div[item_id='{$param['key']}']\").css('border-top', '3px solid {$item->status->cor}');");
                     }
 
+                    // Notifica os usuários da alteração de data do projeto.
+                    $msg = "🔄️";
+                    $msg .= "*Estágio da tarefa foi alterada.*\n*Estágio:* {estagio->titulo}\n*Tarefa:* {titulo}\n*Projeto:* {projeto->titulo}\n*Início:* {datahora_inicio_br}\n*Término:* {datahora_fim_br} _({tempo_percorrido})_";
+                    NotificacaoService::notificar($msg, $item);
                 }
 
                 TTransaction::close();

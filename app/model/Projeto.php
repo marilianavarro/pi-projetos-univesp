@@ -5,6 +5,7 @@ class Projeto extends TRecord
     const TABLENAME  = 'projeto';
     const PRIMARYKEY = 'id';
     const IDPOLICY   =  'serial'; // {max, serial}
+    const CACHECONTROL  = 'TAPCache';
 
     const DELETEDAT  = 'datahora_excluido';
     const CREATEDAT  = 'datahora_criacao';
@@ -12,6 +13,7 @@ class Projeto extends TRecord
 
     
 
+    use SystemChangeLogTrait;
     /**
      * Constructor method
      */

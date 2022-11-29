@@ -545,6 +545,11 @@ class DatabaseInstall extends TPage
             if(!isset($inserted["{$databaseName}_{$name}_inserts_default_data"]) || (isset($inserted["{$databaseName}_{$name}_inserts_default_data"]) && $inserted["{$databaseName}_{$name}_inserts_default_data"] == 0 ))
             {
                 $sql = file_get_contents("app/database/{$databaseName}-inserts.sql");
+
+                if(($databaseType == 'mssql' || $databaseType == 'sqlsrv') && file_exists("app/database/{$databaseName}-inserts-mssql.sql"))
+                {
+                    $sql = file_get_contents("app/database/{$databaseName}-inserts-mssql.sql");
+                }
                 
                 $conn = TTransaction::get();
 

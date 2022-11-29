@@ -28,30 +28,24 @@ class KanbanItemForm extends TPage
         $this->form->setFormTitle("Cadastro de Tarefas");
 
 
-        $titulo = new TEntry('titulo');
-        $descricao = new THtmlEditor('descricao');
-        $status_id = new TDBCombo('status_id', 'gestao', 'Status', 'id', '{titulo}','titulo asc'  );
-        $usuario_id = new TDBCombo('usuario_id', 'gestao', 'SystemUsers', 'id', '{name}','name asc'  );
         $datahora_inicio = new TDateTime('datahora_inicio');
         $datahora_fim = new TDateTime('datahora_fim');
         $projeto_id = new THidden('projeto_id');
         $estagio_id = new THidden('estagio_id');
         $item_ordem = new THidden('item_ordem');
         $id = new THidden('id');
+        $titulo = new TEntry('titulo');
+        $descricao = new THtmlEditor('descricao');
+        $status_id = new TDBCombo('status_id', 'gestao', 'Status', 'id', '{titulo}','titulo asc'  );
+        $usuario_id = new TDBCombo('usuario_id', 'gestao', 'SystemUsers', 'id', '{name}','name asc'  );
 
-        $titulo->addValidation("Título obrigatório!", new TRequiredValidator()); 
-        $status_id->addValidation("Status obrigatório!", new TRequiredValidator()); 
         $datahora_inicio->addValidation("Data Início Obrigatória!", new TRequiredValidator()); 
         $datahora_fim->addValidation("Data Término Obrigatória!", new TRequiredValidator()); 
+        $titulo->addValidation("Título obrigatório!", new TRequiredValidator()); 
+        $status_id->addValidation("Status obrigatório!", new TRequiredValidator()); 
 
         $titulo->setMaxLength(200);
         $status_id->setDefaultOption(false);
-
-        $status_id->setValue(Status::EmAndamento);
-        $usuario_id->setValue(TSession::getValue("userid"));
-
-        $status_id->enableSearch();
-        $usuario_id->enableSearch();
 
         $datahora_fim->setMask('dd/mm/yyyy hh:ii');
         $datahora_inicio->setMask('dd/mm/yyyy hh:ii');
@@ -59,31 +53,34 @@ class KanbanItemForm extends TPage
         $datahora_fim->setDatabaseMask('yyyy-mm-dd hh:ii');
         $datahora_inicio->setDatabaseMask('yyyy-mm-dd hh:ii');
 
+        $status_id->setValue(Status::EmAndamento);
+        $usuario_id->setValue(TSession::getValue("userid"));
+
+        $status_id->enableSearch();
+        $usuario_id->enableSearch();
+
         $id->setSize(200);
         $titulo->setSize('100%');
         $projeto_id->setSize(200);
         $estagio_id->setSize(200);
         $item_ordem->setSize(200);
-        $status_id->setSize('100%');
         $datahora_fim->setSize(150);
+        $status_id->setSize('100%');
         $usuario_id->setSize('100%');
         $datahora_inicio->setSize(150);
-        $descricao->setSize('100%', 210);
+        $descricao->setSize('100%', 180);
 
-        $row1 = $this->form->addFields([new TLabel("Título:", null, '14px', 'I', '100%'),$titulo]);
-        $row1->layout = [' col-sm-12'];
+        $row1 = $this->form->addFields([new TLabel("Data Início:", null, '14px', 'I', '100%'),$datahora_inicio],[new TLabel("Data Término:", null, '14px', 'I', '100%'),$datahora_fim,$projeto_id,$estagio_id,$item_ordem,$id]);
+        $row1->layout = ['col-sm-6','col-sm-6'];
 
-        $row2 = $this->form->addFields([new TLabel("Descrição:", null, '14px', null, '100%'),$descricao]);
+        $row2 = $this->form->addFields([new TLabel("Título:", null, '14px', 'I', '100%'),$titulo]);
         $row2->layout = [' col-sm-12'];
 
-        $row3 = $this->form->addFields([new TLabel("Status:", null, '14px', 'I', '100%'),$status_id]);
+        $row3 = $this->form->addFields([new TLabel("Descrição:", null, '14px', null, '100%'),$descricao]);
         $row3->layout = [' col-sm-12'];
 
-        $row4 = $this->form->addFields([new TLabel("Usuário Responsável:", null, '14px', null, '100%'),$usuario_id]);
-        $row4->layout = [' col-sm-12'];
-
-        $row5 = $this->form->addFields([new TLabel("Data Início:", null, '14px', 'I', '100%'),$datahora_inicio],[new TLabel("Data Término:", null, '14px', 'I', '100%'),$datahora_fim,$projeto_id,$estagio_id,$item_ordem,$id]);
-        $row5->layout = ['col-sm-6','col-sm-6'];
+        $row4 = $this->form->addFields([new TLabel("Status:", null, '14px', 'I', '100%'),$status_id],[new TLabel("Usuário Responsável:", null, '14px', null, '100%'),$usuario_id]);
+        $row4->layout = [' col-sm-6',' col-sm-6'];
 
         // create the form actions
         $btn_onsave = $this->form->addAction("Salvar", new TAction([$this, 'onSave']), 'fas:save #ffffff');

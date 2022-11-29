@@ -31,6 +31,8 @@ class KanbanItemCalendarForm extends TPage
 
         $view = new THidden('view');
 
+        $datahora_inicio = new TDateTime('datahora_inicio');
+        $datahora_fim = new TDateTime('datahora_fim');
         $projeto_id = new TDBCombo('projeto_id', 'gestao', 'Projeto', 'id', '{titulo}','titulo asc'  );
         $id = new THidden('id');
         $item_ordem = new THidden('item_ordem');
@@ -39,22 +41,20 @@ class KanbanItemCalendarForm extends TPage
         $status_id = new TDBCombo('status_id', 'gestao', 'Status', 'id', '{titulo}','titulo asc'  );
         $titulo = new TEntry('titulo');
         $descricao = new THtmlEditor('descricao');
-        $datahora_inicio = new TDateTime('datahora_inicio');
-        $datahora_fim = new TDateTime('datahora_fim');
 
         $projeto_id->addValidation("Projeto obrigatório!", new TRequiredValidator()); 
         $estagio_id->addValidation("Estágio Obrigatório!", new TRequiredValidator()); 
         $status_id->addValidation("Status Obrigatório", new TRequiredValidator()); 
 
         $titulo->setMaxLength(200);
-        $status_id->setValue(Status::EmAndamento);
-        $usuario_id->setValue(TSession::getValue("userid"));
-
         $datahora_fim->setMask('dd/mm/yyyy hh:ii');
         $datahora_inicio->setMask('dd/mm/yyyy hh:ii');
 
         $datahora_fim->setDatabaseMask('yyyy-mm-dd hh:ii');
         $datahora_inicio->setDatabaseMask('yyyy-mm-dd hh:ii');
+
+        $status_id->setValue(Status::EmAndamento);
+        $usuario_id->setValue(TSession::getValue("userid"));
 
         $status_id->enableSearch();
         $projeto_id->enableSearch();
@@ -64,28 +64,28 @@ class KanbanItemCalendarForm extends TPage
         $id->setSize(200);
         $titulo->setSize('100%');
         $item_ordem->setSize(200);
-        $status_id->setSize('100%');
         $datahora_fim->setSize(150);
+        $status_id->setSize('100%');
         $projeto_id->setSize('100%');
         $estagio_id->setSize('100%');
         $usuario_id->setSize('100%');
         $datahora_inicio->setSize(150);
         $descricao->setSize('100%', 210);
 
-        $row1 = $this->form->addFields([new TLabel("Projeto:", null, '14px', null, '100%'),$projeto_id,$id,$item_ordem]);
-        $row1->layout = ['col-sm-6'];
+        $row1 = $this->form->addFields([new TLabel("Data Início:", null, '14px', null, '100%'),$datahora_inicio],[new TLabel("Data Fim:", null, '14px', null, '100%'),$datahora_fim]);
+        $row1->layout = ['col-sm-6','col-sm-6'];
 
-        $row2 = $this->form->addFields([new TLabel("Estágio:", null, '14px', null, '100%'),$estagio_id],[new TLabel("Usuário:", null, '14px', null, '100%'),$usuario_id]);
-        $row2->layout = ['col-sm-6','col-sm-6'];
+        $row2 = $this->form->addFields([new TLabel("Projeto:", null, '14px', null, '100%'),$projeto_id,$id,$item_ordem]);
+        $row2->layout = ['col-sm-6'];
 
-        $row3 = $this->form->addFields([new TLabel("Status:", null, '14px', null, '100%'),$status_id],[new TLabel("Título:", null, '14px', null, '100%'),$titulo]);
+        $row3 = $this->form->addFields([new TLabel("Estágio:", null, '14px', null, '100%'),$estagio_id],[new TLabel("Usuário:", null, '14px', null, '100%'),$usuario_id]);
         $row3->layout = ['col-sm-6','col-sm-6'];
 
-        $row4 = $this->form->addFields([new TLabel("Descrição:", null, '14px', null, '100%'),$descricao]);
-        $row4->layout = [' col-sm-12'];
+        $row4 = $this->form->addFields([new TLabel("Status:", null, '14px', null, '100%'),$status_id],[new TLabel("Título:", null, '14px', null, '100%'),$titulo]);
+        $row4->layout = ['col-sm-6','col-sm-6'];
 
-        $row5 = $this->form->addFields([new TLabel("Data Início:", null, '14px', null, '100%'),$datahora_inicio],[new TLabel("Data Fim:", null, '14px', null, '100%'),$datahora_fim]);
-        $row5->layout = ['col-sm-6','col-sm-6'];
+        $row5 = $this->form->addFields([new TLabel("Descrição:", null, '14px', null, '100%'),$descricao]);
+        $row5->layout = [' col-sm-12'];
 
         $this->form->addFields([$view]);
 
@@ -297,7 +297,7 @@ class KanbanItemCalendarForm extends TPage
                 $object->datahora_fim   = str_replace('T', ' ', $param['end_time']);
 
                 // Notifica os usuários da alteração de data do projeto.
-                $msg = "🔄️*Data da tarefa do projeto foi alterada.*\n*Estágio:* {titulo}\n*Projeto:* {projeto->titulo}\n*Início:* {datahora_inicio_br}\n*Término:* {datahora_fim_br} _({tempo_percorrido})_";
+                $msg = "🔄️*Data da tarefa do projeto foi alterada.*\n*Tarefa:* {titulo}\n*Projeto:* {projeto->titulo}\n*Início:* {datahora_inicio_br}\n*Término:* {datahora_fim_br} _({tempo_percorrido})_";
                 NotificacaoService::notificar($msg, $object);
 
                 $object->store();

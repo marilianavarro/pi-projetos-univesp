@@ -12,6 +12,7 @@ class Notificacao extends TRecord
 
     
 
+    use SystemChangeLogTrait;
     /**
      * Constructor method
      */

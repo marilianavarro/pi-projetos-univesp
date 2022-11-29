@@ -25,25 +25,25 @@ class TesteForm extends TPage
         // creates the form
         $this->form = new BootstrapFormBuilder(self::$formName);
         // define the form title
-        $this->form->setFormTitle("TesteForm");
+        $this->form->setFormTitle("Testes");
 
 
-        $button_testar_notificacao = new TButton('button_testar_notificacao');
-        $button_testar_cron = new TButton('button_testar_cron');
+        $button_testar_notificacao_do_telegram = new TButton('button_testar_notificacao_do_telegram');
+        $button_testar_tarefa_agendada = new TButton('button_testar_tarefa_agendada');
 
 
-        $button_testar_cron->setAction(new TAction([$this, 'onTestarCron']), "Testar Cron");
-        $button_testar_notificacao->setAction(new TAction([$this, 'onTestarNotificacao']), "Testar Notificação");
+        $button_testar_tarefa_agendada->setAction(new TAction([$this, 'onTestarCron']), "Testar Tarefa Agendada");
+        $button_testar_notificacao_do_telegram->setAction(new TAction([$this, 'onTestarNotificacao']), "Testar Notificação do Telegram");
 
-        $button_testar_cron->addStyleClass('btn-default');
-        $button_testar_notificacao->addStyleClass('btn-default');
+        $button_testar_tarefa_agendada->addStyleClass('btn-default');
+        $button_testar_notificacao_do_telegram->addStyleClass('btn-default');
 
-        $button_testar_cron->setImage('fas:tasks #000000');
-        $button_testar_notificacao->setImage('fas:sms #000000');
+        $button_testar_tarefa_agendada->setImage('fas:tasks #000000');
+        $button_testar_notificacao_do_telegram->setImage('fas:sms #000000');
 
 
-        $row1 = $this->form->addFields([$button_testar_notificacao,$button_testar_cron]);
-        $row1->layout = ['col-sm-6'];
+        $row1 = $this->form->addFields([$button_testar_notificacao_do_telegram],[$button_testar_tarefa_agendada]);
+        $row1->layout = [' col-sm-6',' col-sm-6'];
 
         // create the form actions
 

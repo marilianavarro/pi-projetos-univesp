@@ -28,6 +28,43 @@ Descrição: {descricao} ");
         $this->fc->setOption('slotDuration', "00:30:00");
         $this->fc->setOption('slotLabelInterval', 30);
 
+        $resources = array();
+
+        TTransaction::open('gestao');
+        $projetos_db = Projeto::orderBy('id')
+                        ->load();
+        if($projetos_db)
+        {
+            foreach($projetos_db as $item)
+            {
+                $resources[] = array(
+                        'id' => $item->id
+                        ,'title' => $item->id
+                        // ,'eventColor' => $item->id
+                );
+            }
+        }
+        TTransaction::close();
+
+        $this->fc->setOption('resources', $resources);
+
+        // $plugins = array('resourceTimeGrid');
+        // $this->fc->setOption('plugins', $plugins);
+        // $this->fc->setOption('initialView', 'resourceTimeGridWeek');
+
+        // $header = array('right' => 'resourceTimeGridWeek');
+        // $this->fc->setOption('header', $header);
+
+        // parent::add( ""
+        //         . "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.5/main.min.css'>"
+        //         . "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@5.5/main.min.css'>"
+        //         . "<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.5/main.min.js'></script>"
+        //         . "<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@5.5/main.min.js'></script>"
+        //         . "<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/resource-common@5.5/main.min.js'></script>"
+        //         . "<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/resource-daygrid@5.5/main.min.js'></script>"
+        //         . "<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/resource-timegrid@5.5/main.min.js'></script>"
+        //     );
+
         parent::add( $this->fc );
     }
 
@@ -59,6 +96,8 @@ Descrição: {descricao} ");
                     $event_array['color'] = $event->render("{status->cor}");
                     $event_array['title'] = TFullCalendar::renderPopover($event->render("{titulo} "), $event->render(" {titulo} "), $event->render(" Projeto:  {projeto->titulo}<br>
 Descrição: {descricao} "));
+
+                    $event_array['resourceId'] = $event->projeto_id;
 
                     $return[] = $event_array;
                 }

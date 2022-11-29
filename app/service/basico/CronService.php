@@ -10,7 +10,7 @@ class CronService
         $criteria = new TCriteria;
     
         // Filtros
-        $criteria->add(new TFilter('datahora_fim', '<', 'NOW()'));
+        $criteria->add(new TFilter('datahora_fim', '<', 'NOESC:NOW()'));
         $criteria->add(new TFilter('status_id', 'NOT IN', [Status::Finalizado, Status::Cancelado]));
         //var_dump($criteria->dump());
         

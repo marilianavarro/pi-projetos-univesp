@@ -15,6 +15,7 @@ class KanbanItem extends TRecord
     private $status;
     private $estagio;
 
+    use SystemChangeLogTrait;
     /**
      * Constructor method
      */

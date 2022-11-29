@@ -4,6 +4,8 @@ class TelegramWebHookService
 {
     public function show($param)
     {
+        set_time_limit(4);
+        
         $content = file_get_contents("php://input");
         $update = json_decode($content, true);
         $chat_id = $update["message"]["chat"]["id"] ?? null;
@@ -25,7 +27,7 @@ class TelegramWebHookService
 
         if($command == "start")
         {
-            $notificacao_id = $args[1] ?? null;
+            $notificacao_id = $args[0] ?? null;
             if($notificacao_id)
             {
                 // Se o comando for /start e tiver o ID da Notificação, cadastra ele.
@@ -43,22 +45,26 @@ class TelegramWebHookService
                 
                 $message = "✅Olá {$chat_username}, apartir de agora você irá receber as notificações por aqui :)";
                 
-                Funcao::telegram($message, $token, $chat_id);
+                $retorno = Funcao::telegram($message, $token, $chat_id);
+                //var_dump($retorno);
             }
             else
             {
                 $message = "⚠️ Ops! Só é permitido cadastro em nosso BOT através de nosso sistema de Gestão de Projetos.";
                     
-                Funcao::telegram($message, $token, $chat_id);
+                $retorno = Funcao::telegram($message, $token, $chat_id);
+                //var_dump($retorno);
             }
         }
         else
         {
             $message = "⚠️ Ops! Você digitou algum comando inválido.";
                 
-            Funcao::telegram($message, $token, $chat_id);
+            $retorno = Funcao::telegram($message, $token, $chat_id);
+            //var_dump($retorno);
         }
         
+        //var_dump($message);
 
     }
 }

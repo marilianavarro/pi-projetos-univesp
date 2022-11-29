@@ -5,6 +5,7 @@ class KanbanEstagio extends TRecord
     const TABLENAME  = 'kanban_estagio';
     const PRIMARYKEY = 'id';
     const IDPOLICY   =  'serial'; // {max, serial}
+    const CACHECONTROL  = 'TAPCache';
 
     const DELETEDAT  = 'datahora_excluido';
     const CREATEDAT  = 'datahora_criacao';
@@ -14,6 +15,7 @@ class KanbanEstagio extends TRecord
 
     
 
+    use SystemChangeLogTrait;
     /**
      * Constructor method
      */

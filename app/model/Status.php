@@ -5,6 +5,7 @@ class Status extends TRecord
     const TABLENAME  = 'status';
     const PRIMARYKEY = 'id';
     const IDPOLICY   =  'serial'; // {max, serial}
+    const CACHECONTROL  = 'TAPCache';
 
     const DELETEDAT  = 'datahora_excluido';
     const CREATEDAT  = 'datahora_criacao';
@@ -17,6 +18,7 @@ class Status extends TRecord
 
     
 
+    use SystemChangeLogTrait;
     /**
      * Constructor method
      */

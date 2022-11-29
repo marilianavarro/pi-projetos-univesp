@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu>
+  <menuitem label="Dashboard">
+    <icon>fas:chart-line fa-fw </icon>
+    <action>DashboardView#method=onShow</action>
+    <menu>  
+</menu>
+  </menuitem>
   <menuitem label="Básico">
     <icon> fa-fw </icon>
     <menu>
@@ -15,21 +21,15 @@
         <icon>fas:calendar-alt fa-fw </icon>
         <action>KanbanItemCalendarFormView</action>
       </menuitem>
-      <menuitem label="Testes">
-        <icon>fas:cogs fa-fw </icon>
-        <action>TesteForm#method=onShow</action>
-      </menuitem>
       <menuitem label="Notificações">
         <icon>fas:bell fa-fw </icon>
         <action>NotificacaoList#method=onShow</action>
       </menuitem>
+      <menuitem label="Testes">
+        <icon>fas:cogs fa-fw </icon>
+        <action>TesteForm#method=onShow</action>
+      </menuitem>
     </menu>
-  </menuitem>
-  <menuitem label="Dashboard">
-    <icon>fas:chart-line fa-fw </icon>
-    <action>DashboardView#method=onShow</action>
-    <menu>  
-</menu>
   </menuitem>
   <menuitem label="_t{Administration}">
     <icon>fas:home fa-fw</icon>
